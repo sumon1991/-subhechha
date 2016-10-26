@@ -1,0 +1,9 @@
+adding total payable money in the place of placing customer order.(Done & Stable)
+
+creating Payment Log. (Done & stable)
+ 
+Updating the total payable money on edit order(out of the box).(Done & Stable).
+
+Bug Issue : after editing the order in order details tab after saving rather it's not redirecting to the right page (Not Fixed Out of the box).
+
+
