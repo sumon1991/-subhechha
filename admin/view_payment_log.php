@@ -2,22 +2,22 @@
 //NOTIFICATION MESSAGE GENERATION ....
 if(!empty($_SESSION['success']))
 {
-	$success_msg = $_SESSION['success'];
+  $success_msg = $_SESSION['success'];
     unset($_SESSION['success']);
-}	
+} 
 else
 {
-	$success_msg = '';
+  $success_msg = '';
 }
 
 if(isset($_SESSION['error']))
 {
-	$error_message = $_SESSION['error'];
-	unset($_SESSION['error']);
+  $error_message = $_SESSION['error'];
+  unset($_SESSION['error']);
 }
 else
 {
-	$error_message = '';
+  $error_message = '';
 }
 
 
@@ -26,13 +26,11 @@ else
     $order_id = $_REQUEST['order_id'];
 else
     $order_id = '';*/
-	
+  
 if(!empty($_REQUEST['oid']))
     $order_id = $_REQUEST['oid'];
 else
-    $order_id = '';	
-	
-
+    $order_id = ''; 
 //CODE TO GET COUSTOMER ORDER DETAILS ...
 $cust_sql = "SELECT * FROM ".CUSTOMER_ORDER." WHERE order_id = '".$order_id."'"; 
 $cust_query = mysql_query($cust_sql); 
@@ -66,7 +64,7 @@ function whoIsCustomer($cus_id, $email_flag = null) {
     print_r($cus_details['customer_name']);
   }
 }
-
+$newURL = $_SERVER['REQUEST_URI'];
 //CODE TO CREATE OR UPDATE COMPANY DETAILS INCLUDING BANK DETAILS .....
 if(isset($_POST['btn_update']))
 {
@@ -76,19 +74,33 @@ if(isset($_POST['btn_update']))
   $total_price_payable = $cust_ite_fetch['total_payable_money'];
   $upadated_discount  = $_POST['Update_amount'];
   $final_carry_forward = $total_price_payable - $upadated_discount;
+  /*echo "<pre>";
+  echo $total_price_payable;
+  echo $upadated_discount;
+  exit();*/
+  if ($total_price_payable < $upadated_discount) {
+   $_SESSION['error'] = "Updated discount should be less than or equals to total price payable";
+   header('Location: '.$newURL);
+   exit(); 
+  }
+  else
+  {
+    $sql_type = "INSERT INTO ".PAYMENT_LOG." (`customer_id`, `order_id`, `rough_price`, `total_price_payable`, `updated_discount`, `final_carry_forward`) VALUES ($customer_id, $order_id, '$rough_price', '$total_price_payable', '$upadated_discount', '$final_carry_forward')";
+    $sql_insert = mysql_query($sql_type);
 
-  $sql_type = "INSERT INTO ".PAYMENT_LOG." (`customer_id`, `order_id`, `rough_price`, `total_price_payable`, `updated_discount`, `final_carry_forward`) VALUES ($customer_id, $order_id, '$rough_price', '$total_price_payable', '$upadated_discount', '$final_carry_forward')";
-  $sql_insert = mysql_query($sql_type);
 
-
-  $update_details_table = "UPDATE ".ORDER_ITEM." SET
-    total_payable_money  = '".$final_carry_forward."' WHERE order_id = '".$order_id ."'";
-   
-  $sql_update = mysql_query($update_details_table);
-
-	$_SESSION['success'] = "Customer Order has been update successfully";
-	echo '<script>window.location="'.SITE_URL.'/create_invoice_pdf.php?order_id='.$order_id.'"</script>';
-		  
+    $update_details_table = "UPDATE ".ORDER_ITEM." SET
+      total_payable_money  = '".$final_carry_forward."' WHERE order_id = '".$order_id ."'";
+     
+    $sql_update = mysql_query($update_details_table);
+  }
+  
+  $_SESSION['success'] = "Customer Order has been update successfully";
+  if ($_SESSION['success']) {
+    header('Location: '.$newURL);
+  }
+  echo '<script>window.location="'.SITE_URL.'/create_invoice_pdf.php?order_id='.$order_id.'"</script>';
+      
 }
 
 include('includes/header_after_login.php');
@@ -127,42 +139,43 @@ include('includes/header_after_login.php');
                 
                 </div>
                 <?php 
-				  if(!empty($error_message)) 
-				  { 
-				?>
-					<!-- BEGIN ERROR BOX -->
-					<div class="alert alert-danger fade in" id="error">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-						<?php echo $error_message; ?>
-					</div>
-					<!-- END ERROR BOX -->	
-					<?php } if(!empty($success_msg)) { ?>	
-					<!-- BEGIN OF SUCCESS BOX -->
-					<div class="alert alert-success fade in">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-						<strong>Well done!</strong> <?php echo $success_msg; ?>.
-					</div>									
-					<!-- END OF SUCCESS BOX -->
-				<?php } ?>
+          if(!empty($error_message)) 
+          { 
+        ?>
+          <!-- BEGIN ERROR BOX -->
+          <div class="alert alert-danger fade in" id="error">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <?php echo $error_message; ?>
+          </div>
+          <!-- END ERROR BOX -->  
+          <?php } if(!empty($success_msg)) { ?> 
+          <!-- BEGIN OF SUCCESS BOX -->
+          <div class="alert alert-success fade in">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Well done!</strong> <?php echo $success_msg; ?>.
+          </div>                  
+          <!-- END OF SUCCESS BOX -->
+        <?php } ?>
                 <div class="x_content">
                   <br />
-                  <div align="right" style="padding-bottom:30px; padding-right:20px"><a target="_blank" href="order_invoice_pdf.php?oid=<?php echo $order_id;?>"><img src="images/ads_pdf.png" width="30" height="30" /></a></div>
+                  <!-- <div align="right" style="padding-bottom:30px; padding-right:20px"><a target="_blank" href="order_invoice_pdf.php?oid=<?php echo $order_id;?>"><img src="images/ads_pdf.png" width="30" height="30" /></a></div> -->
                   <form role="form" method="post">
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class="form-group col-md-6 col-sm-6 col-xs-6">Customer Name</label>
                         <input type="text" readonly="true" name="customer_name" class="form-control" value=<?php whoIsCustomer($cust_fetch['customer_id']);?>>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label class="form-group col-md-6 col-sm-6 col-xs-6">Order Id</label>
-                        <input type="text" readonly="true" name="order_id" class="form-control" value=<?php print_r($cust_fetch['order_id']);?>>
+                        <label class="form-group col-md-6 col-sm-6 col-xs-6">Purpose</label>
+                        <input type="text" readonly="true" name="purpose" class="form-control" value=<?php print_r($cust_fetch['purpose']);?>>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class="form-group col-md-6 col-sm-6 col-xs-6">Total Payable Amount</label>
-                        <input type="text" readonly="true" name="payable_amount" class="form-control" value=<?php print_r($cust_ite_fetch['total_payable_money']);?>>
+                        <input type="text" readonly="true" name="payable_amount" class="form-control" id="payable_amount" value=<?php print_r($cust_ite_fetch['total_payable_money']);?>>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class="form-group col-md-6 col-sm-6 col-xs-6">Update Amount</label>
-                          <input type="number" name="Update_amount" class="form-control" required="true">
+                          <input type="number" name="Update_amount" id="updt_amount" class="form-control" required="true" step="any">
+                          <div id="updt_error_js"></div>
                     </div>
                     <div class="form-group">
                       <div class="col-md-5"></div>
@@ -265,5 +278,37 @@ include('includes/header_after_login.php');
     </div>
       <!-- /page content -->
      
+ <script type="text/javascript">
+   $(function(){
+    //console.log($('#payable_amount').val());
+    //console.log($('#updt_amount').val());
+    $('#btn_update_amount').click(function(){
+      var payable_amount = $('#payable_amount').val();
+      var updt_amount = $('#updt_amount').val();
+      payable_amount = parseFloat(payable_amount);
+      updt_amount = parseFloat(updt_amount);
+      if ($.trim(updt_amount)) {
+        if (payable_amount > updt_amount || payable_amount == updt_amount) {
+          $('#updt_amount').attr('style', '');
+          $('#updt_error_js').html('');
+          $('#btn_update_amount').attr('type', 'submit');
+        }
+        else
+        {
+          $('#updt_amount').attr('style', 'border-style: solid;border-color: red;');
+          $('#btn_update_amount').attr('type', 'button');
+          $('#updt_error_js').html('<p style="color:red;"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Update amount should not be greater than payable amount</p>');
+          //return;
+        }
+      }
+      else{
+        $('#updt_amount').attr('style', 'border-style: solid;border-color: red;');
+        $('#btn_update_amount').attr('type', 'button');
+        $('#updt_error_js').html('<p style="color:red;"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Update amount should not be empty!</p>');
+        //return;
+      }
 
+    });
+   });
+ </script>
  <?php include('includes/footer_after_login.php'); ?>

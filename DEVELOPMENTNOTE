@@ -5,5 +5,14 @@ creating Payment Log. (Done & stable)
 Updating the total payable money on edit order(out of the box).(Done & Stable).
 
 Bug Issue : after editing the order in order details tab after saving rather it's not redirecting to the right page (Not Fixed Out of the box).
+//=========================
+Changes on Release V1.1
+1. Please remove the PDF icon from payment log.
+
+2. After payment updated it should be redirected into the same page. Currently its going to different page which is wrong.
+
+3. Instead of showing order id please show the date, purpose and location of the order.
+
+4. Update text field should have some validation otherwise a mess will happen. if you see 2nd order log you can understand the situation. If my due is 100 I can't put 500 into the update text box because it greater than the due amount.
 
 
