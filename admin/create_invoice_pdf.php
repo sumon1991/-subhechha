@@ -268,7 +268,7 @@ $sys_date = date("d-m-Y");
 
 		$_SESSION['success'] = "Customer Order has been Added successfully"; // @01-09-2016 Note: Only message needs to be modified.
 
-		echo '<script>window.location="'.SITE_URL.'/?page=view_customer_order&order_id='.$order_id.'"</script>';
+		echo '<script>window.location="'.SITE_URL.'/?page=view_customer_order&oid='.$order_id.'"</script>';
 	//--- This part of code is required for sending email with attachment ---//
 
 

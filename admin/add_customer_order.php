@@ -361,4 +361,14 @@
 </div>
 </div>
 <!-- /page content -->
+<script type="text/javascript">
+  $( function() {
+    var dateToday = new Date();
+    $( "#birthday" ).datepicker({
+      minDate: dateToday
+    });
+    $( "#birthday" ).datepicker( "option" , "dateFormat", "dd/mm/yy");
+
+  } );
+</script>
 <?php include('includes/footer_after_login.php'); ?>
