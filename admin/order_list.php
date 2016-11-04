@@ -196,7 +196,7 @@
                                 <a class="btn btn-danger" disabled="true" title="delete_order" onclick="return _deleteOrder('<?php echo $col_list_array['order_id'];?>')"><i class="fa fa-circle"></i></a>
                              <?php }
                             ?>
-                           
+                           <a class="btn btn-dark" title="View Order" href="?page=view_order&oid=<?php echo $col_list_array['order_id'];?>"><i class="fa fa-circle"></i></a>
                         </td>
 
                      </tr>

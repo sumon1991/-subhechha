@@ -26,5 +26,8 @@ initial it was ->> oid=1 but after redirection it become order_id=1, change it t
 2. Please add a column in this order list for showing the occasion date.  
 3.Now for customer add operation please remove the mandatory option from email field, make it optional.
 4.Please add a remove option in the order list. 
-
+//=============================
+Changes v1.3
+1. if total payable money will be less than or equals to zero update amount field will be disabled
+2. view order option
 

@@ -282,6 +282,9 @@ include('includes/header_after_login.php');
    $(function(){
     //console.log($('#payable_amount').val());
     //console.log($('#updt_amount').val());
+    if (<?php print_r($cust_ite_fetch['total_payable_money']);?> <= 0) {
+      $('#updt_amount').attr('disabled', 'true');
+    }
     $('#btn_update_amount').click(function(){
       var payable_amount = $('#payable_amount').val();
       var updt_amount = $('#updt_amount').val();

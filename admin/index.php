@@ -309,7 +309,10 @@ if(!empty($_SESSION['login_status']) && $_SESSION['login_status']=='yes')
 			include('pay_to_vendor.php');
 			break;
                     
-			
+			case 'view_order':
+				$class_name = "view_order";
+				include("view_order.php");
+				break;
 			
 			default:
 			$class_name = "dashboard";
