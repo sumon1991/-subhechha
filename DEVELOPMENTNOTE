@@ -30,4 +30,11 @@ initial it was ->> oid=1 but after redirection it become order_id=1, change it t
 Changes v1.3
 1. if total payable money will be less than or equals to zero update amount field will be disabled
 2. view order option
+//============================
+Changes v1.4
+1. Please use the delete icon to for delete button. You can find the icon in the URL - http://sunmobileservice.com/subhechha/admin/?page=list_employee_type (Done)
+2. A] If today is greater than the occasion date then it can be removed otherwise it can't be. (done)
+C] If there is any due exists for an order then it can't be removed. If there is no due you can delete it.(Done)
+3. In view order please add a back button to back to the order list.(Done).
+5. Order list will be shown in descending order respect to occasion date means latest occasion date wise order will be at top.(Done)
 
