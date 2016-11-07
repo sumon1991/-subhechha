@@ -45,7 +45,7 @@
    
    // FOLLOWING CODE IS FOR FETCHING THE DATA OF CATEGORY
     
-   $use_list_sql = "SELECT * FROM ".CUSTOMER_ORDER." WHERE 1";
+   $use_list_sql = "SELECT * FROM ".CUSTOMER_ORDER." ORDER BY order_id DESC";
    $use_list_query = mysql_query($use_list_sql);
    
    if($use_list_query)
@@ -56,7 +56,6 @@
    {
     $use_list_rows = 0;
    } 
-   
    if(isset($_GET['action']) && $_GET['action'] == 'delete')
    {
        $sql1 = "DELETE FROM ".USER_DETAILS." WHERE user_id = '".$id."'";  
@@ -187,13 +186,18 @@
                            <a class="btn btn-dark" title="Order" href="?page=view_customer_order&oid=<?php echo $col_list_array['order_id'];?>&action=order"><i class="fa fa-circle"></i></a>
                            <a class="btn btn-dark" title="Payment_log"href="?page=view_payment_log&oid=<?php echo $col_list_array['order_id'];?>&action=order"><i class="fa fa-circle"></i></a>
                            <?php 
-                              
-                              if (strtotime(date('d/m/Y')) > strtotime($col_list_array['date'])) { ?>
-                                <a class="btn btn-danger" title="delete_order" onclick="return _deleteOrder('<?php echo $col_list_array['order_id'];?>')"><i class="fa fa-circle"></i></a>
+                              $money_payable = "SELECT total_payable_money FROM ".ORDER_ITEM." WHERE order_id = ".$col_list_array['order_id'];
+                              //echo $money_payable;
+                              $res = mysql_query($money_payable);
+                              $total_money = mysql_fetch_assoc($res);
+                              //echo "<pre>";
+                              //echo $total_money['total_payable_money'];
+                              if (strtotime(date('d/m/Y')) > strtotime($col_list_array['date']) && $total_money['total_payable_money'] <= 0) { ?>
+                                <a class="btn btn-danger" title="delete_order" onclick="return _deleteOrder('<?php echo $col_list_array['order_id'];?>')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                               <?php }
                               else
                               { echo $date_today;?>
-                                <a class="btn btn-danger" disabled="true" title="delete_order" onclick="return _deleteOrder('<?php echo $col_list_array['order_id'];?>')"><i class="fa fa-circle"></i></a>
+                                <a class="btn btn-danger" disabled="true" title="delete_order" onclick="return _deleteOrder('<?php echo $col_list_array['order_id'];?>')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                              <?php }
                             ?>
                            <a class="btn btn-dark" title="View Order" href="?page=view_order&oid=<?php echo $col_list_array['order_id'];?>"><i class="fa fa-circle"></i></a>

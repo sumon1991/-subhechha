@@ -130,7 +130,7 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
          <div class="x_panel">
             <div class="x_title">
-               <h2>Order Details<small>Details Of Customer order form</small></h2>
+               <h2><a href="?page=order_list"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>  Order Details <small>Details Of Customer order form</small></h2>
                <ul class="nav navbar-right panel_toolbox">
                   </li>
                   <li class="dropdown">
