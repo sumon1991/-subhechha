@@ -45,7 +45,7 @@
    
    // FOLLOWING CODE IS FOR FETCHING THE DATA OF CATEGORY
     
-   $use_list_sql = "SELECT * FROM ".CUSTOMER_ORDER." ORDER BY order_id DESC";
+   $use_list_sql = "SELECT * FROM ".CUSTOMER_ORDER." WHERE is_archive = '0' ORDER BY order_id DESC";
    $use_list_query = mysql_query($use_list_sql);
    
    if($use_list_query)
