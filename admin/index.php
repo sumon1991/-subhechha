@@ -154,6 +154,11 @@ if(!empty($_SESSION['login_status']) && $_SESSION['login_status']=='yes')
 			$class_name = "customer";
 			include('view_customer_order.php');
 			break;
+
+			case 'customer_order':
+			$class_name = "customer";
+			include('customer_order.php');
+			break;
 			
 			case 'view_payment_log':
 			$class_name = "payment_log";

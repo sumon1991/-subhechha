@@ -187,7 +187,8 @@ include('includes/header_after_login.php');
                                                 <td><?php echo $col_list_array['customer_phone']; ?></td>
                                                 <td><?php echo $col_list_array['customer_email']; ?></td>
                                            <td class="text-center"><a class="btn btn-dark" title="Edit" href="?page=edit_customer&id=<?php echo $col_list_array['id'];?>"><i class="fa fa-pencil-square-o"></i></a>
-                 <a class="btn btn-dark" title="Order" href="?page=add_customer_order&id=<?php echo $col_list_array['id'];?>&action=order"><i class="fa fa-circle"></i></a>
+                 <a class="btn btn-dark" title="Add New Order" href="?page=add_customer_order&id=<?php echo $col_list_array['id'];?>&action=order"><i class="fa fa-circle"></i></a>
+                 <a class="btn btn-dark" title="View All Order" href="?page=customer_order&id=<?php echo $col_list_array['id'];?>"><i class="fa fa-circle"></i></a>
                 <a class="btn btn-dark" title="Delete" href="?page=customer_list&id=<?php echo $col_list_array['id'];?>&action=delete" onclick="javascript:return confirm('Are you sure you want to delete this Customer?');"><i class="fa fa-times-circle"></i></a>
                 
                                                 </td>
