@@ -127,6 +127,12 @@
                           </tr>
                     <?php
                         }
+                      } else {
+                    ?>
+                    <tr>
+                      <td colspan="7"> No data to show</td>
+                    </tr>
+                    <?php
                       }
                     ?>
                     <tr role="row">
