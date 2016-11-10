@@ -32,7 +32,7 @@ else
 
 // FOLLOWING CODE IS FOR FETCHING THE DATA OF CATEGORY
  
-$use_list_sql = "SELECT * FROM ".CUSTOMER." WHERE status = '1'";
+$use_list_sql = "SELECT * FROM ".CUSTOMER." WHERE status = '1' ORDER BY id DESC";
 $use_list_query = mysql_query($use_list_sql);
 
 if($use_list_query)
